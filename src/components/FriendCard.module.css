@@ -1,0 +1,108 @@
+.friendCard {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(74, 46, 27, 0.05), inset 0 2px 0 rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.friendCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(74, 46, 27, 0.08), inset 0 2px 0 rgba(255, 255, 255, 0.6);
+}
+
+.featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--space-lg);
+  background: var(--accent-cream);
+  padding: var(--space-xl);
+  flex-direction: row;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-input);
+  background-size: cover;
+  background-position: center;
+  border: 3px solid var(--accent-cream);
+  box-shadow: 0 4px 10px rgba(74, 46, 27, 0.1);
+  flex-shrink: 0;
+}
+
+.avatarFeatured {
+  width: 140px;
+  height: 140px;
+  border-width: 6px;
+}
+
+.friendName {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.friendNameFeatured {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-xs);
+}
+
+.friendRelation {
+  font-family: var(--font-accent);
+  font-size: 1.2rem;
+  color: var(--text-muted);
+}
+
+.friendRelationFeatured {
+  font-size: 1.6rem;
+}
+
+.metaTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: auto;
+}
+
+.featuredDetails {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 2px dashed rgba(138, 101, 76, 0.2);
+}
+
+.detailGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detailLabel {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.detailValue {
+  font-size: 1.1rem;
+  font-weight: 600;
+}

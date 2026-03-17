@@ -1,0 +1,33 @@
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--space-xxl);
+  align-items: start;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.sectionAccent {
+  font-family: var(--font-accent);
+  color: var(--accent-baked);
+  font-size: 1.8rem;
+  transform: rotate(-5deg);
+  display: inline-block;
+}
+
+.rosterGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg);
+}
