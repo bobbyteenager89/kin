@@ -34,7 +34,7 @@ Warm and analog. Feels like a handwritten letter or a well-loved address book â€
 | nickname | text? | |
 | avatarUrl | text? | |
 | relation | text? | "College Roommate", "Neighbor", etc. |
-| birthday | date? | Month + day, year optional |
+| birthday | date? | Uses sentinel year 1904 when birth year unknown (leap year handles Feb 29). Month + day always present. |
 | partnerName | text? | |
 | weddingAnniversary | date? | |
 | address | jsonb? | { street, city, state, zip } |
@@ -65,7 +65,7 @@ Warm and analog. Feels like a handwritten letter or a well-loved address book â€
 | type | enum | birthday, anniversary, kids_birthday, address_change, custom |
 | title | text | |
 | date | date | |
-| recurring | boolean | Annual recurrence |
+| recurring | boolean | Annual recurrence for personal events. Public calendar events stored as individual non-recurring rows (one per occurrence). |
 | description | text? | |
 | source | enum | manual, gmail_import, calendar_sync, public_calendar, ai_generated |
 | googleCalendarEventId | text? | For sync |
@@ -92,7 +92,7 @@ Warm and analog. Feels like a handwritten letter or a well-loved address book â€
 | category | text | sports, awards, cultural, holidays, conferences |
 | description | text? | |
 | iconUrl | text? | |
-| eventCount | int | |
+| ~~eventCount~~ | ~~int~~ | Removed â€” compute dynamically via COUNT query at MVP scale |
 | isAiGenerated | boolean | Promoted from AI builder |
 | createdByUserId | uuid? | Null for curated |
 | createdAt | timestamp | |
@@ -109,15 +109,13 @@ Warm and analog. Feels like a handwritten letter or a well-loved address book â€
 
 ### User
 
-Managed by Clerk. Extended with:
+Managed by Clerk. OAuth tokens (Gmail, Google Calendar) managed via Clerk's built-in `getToken()` â€” no manual token storage. Extended with:
 
 | Field | Type | Notes |
 |-------|------|-------|
 | id | uuid | Clerk user ID |
-| gmailAccessToken | text? | Encrypted |
-| gmailRefreshToken | text? | Encrypted |
-| googleCalendarToken | text? | Encrypted |
 | notificationPrefs | jsonb | { birthdayDaysBefore: 1, anniversaryDaysBefore: 7, ... } |
+| aiCalendarQuota | int | Daily limit for AI calendar generation (default: 5) |
 
 ## Architecture
 
@@ -135,25 +133,26 @@ Managed by Clerk. Extended with:
 
 ### Google Calendar Sync
 
+- One-way: Kin pushes to Google Calendar (two-way deferred to v2 â€” conflict resolution is complex)
 - Kin creates named calendars: "Kin â€” Birthdays", "Kin â€” Anniversaries", per-subscription calendars for public calendars
 - Events pushed on person create/edit
-- Background sync via Vercel Cron every 6 hours
-- Two-way: changes in Google Calendar reflected back
+- Background re-sync via Vercel Cron every 6 hours (catches missed pushes)
 
 ### Gmail Email Parsing
 
 - Gmail API with read-only scope
-- Gmail push notifications (pub/sub webhook) trigger parsing, polling fallback
+- Polling via Vercel Cron (every 30 min) â€” no GCP Pub/Sub needed for MVP
 - Scans for emails from: Zola (`@zola.com`), Partiful (`@partiful.com`), Paperless Post (`@paperlesspost.com`)
 - Claude API extracts: event name, date, host name, location
 - Results stored as ImportSuggestions â€” user confirms before adding
+- On approval: fuzzy-match host name against existing Person records to prevent duplicates. If match found, link event to existing person.
 
 ### Calendar Library
 
 - Curated public calendars stored in Neon, browsable by category
 - Categories: Pro Sports, Awards Shows, Cultural Events, Holidays, Conferences
 - Subscribe button syncs events to user's Google Calendar
-- AI Custom Calendar Builder: user prompts Claude API, generates event list, user reviews and subscribes
+- AI Custom Calendar Builder: user prompts Claude API, generates event list, user reviews and subscribes (rate limited: 5/day per user)
 - Popular AI calendars promoted to curated library
 
 ### Notifications
@@ -195,14 +194,14 @@ Managed by Clerk. Extended with:
 
 - Slide-out drawer or modal
 - All person fields + dynamic children list (add/remove)
-- Smart date input (understands "March 15" without year)
+- Smart date input via `chrono-node` (understands "March 15" without year)
 
 ### 4. Import Suggestions
 
 - Cards for each email-parsed suggestion
 - Source badge (Zola/Partiful/Paperless Post)
 - Extracted details preview
-- Approve (creates person + event) or dismiss
+- Approve (fuzzy-matches host against existing contacts, then creates or links person + event) or dismiss
 - Batch approve option
 
 ### 5. Calendar Library
@@ -239,6 +238,10 @@ Managed by Clerk. Extended with:
 8. Push notifications for upcoming events
 9. PWA manifest for iOS home screen
 
+## Implementation Note
+
+The current `/Users/andrew/Projects/kin` directory contains a Vite + React prototype of the dashboard design. The implementation plan will start with a fresh Next.js 15 project, porting the design tokens and component styles from the prototype.
+
 ## Deferred (v2+)
 
 - Friend profile claiming (invite link social model)
@@ -246,9 +249,12 @@ Managed by Clerk. Extended with:
 - Message frequency analysis for auto-granting access
 - Gift ideas notepad
 - "Haven't caught up in a while" nudges
+- Two-way Google Calendar sync (with conflict resolution)
+- Gmail push notifications via GCP Pub/Sub (replace polling)
 - Native iOS app via Capacitor
 - Shared family profiles
 - Photo memories integration
+- Data export (CSV, vCard)
 
 ## Tech Stack
 
