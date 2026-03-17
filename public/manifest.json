@@ -1,0 +1,10 @@
+{
+  "name": "Kin",
+  "short_name": "Kin",
+  "description": "Remember the people you care about",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#E8D8CE",
+  "theme_color": "#4A2E1B",
+  "icons": []
+}
