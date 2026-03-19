@@ -1,4 +1,5 @@
 import { auth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
 import { DashboardClient } from '@/components/dashboard-client';
 import { getPersonsByUser } from '@/lib/queries/persons';
 import { getUpcomingEvents } from '@/lib/queries/events';
@@ -33,6 +34,11 @@ export default async function DashboardPage() {
     getUpcomingEvents(userId, 8),
     getAllNotifications(userId),
   ]);
+
+  // First-time user: redirect to onboarding
+  if (personRows.length === 0) {
+    redirect('/onboarding');
+  }
 
   // Find the person with the nearest upcoming event for "featured" slot
   const featuredPersonId = upcomingEvents[0]?.personId ?? null;

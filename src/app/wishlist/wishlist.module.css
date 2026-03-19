@@ -1,0 +1,320 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.shareNote {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.shareIcon {
+  font-size: 1.1rem;
+}
+
+.error {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: #c0392b;
+  background: rgba(192, 57, 43, 0.08);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+}
+
+.addForm,
+.editForm {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.addFormTitle {
+  font-family: var(--font-accent);
+  font-size: 1.4rem;
+  color: var(--text-main);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.label {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.input {
+  background: var(--bg-input);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  outline: none;
+  transition: box-shadow 0.15s ease;
+}
+
+.input:focus {
+  box-shadow: 0 0 0 2px var(--accent-baked);
+}
+
+.formActions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: flex-end;
+}
+
+.addBtn {
+  background: var(--accent-baked);
+  color: var(--accent-cream);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-sm) var(--space-xl);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow: 0 4px 12px rgba(196, 109, 54, 0.2);
+  align-self: flex-start;
+}
+
+.addBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: #b3612d;
+}
+
+.addBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cancelBtn {
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+}
+
+.cancelBtn:hover {
+  color: var(--text-main);
+}
+
+/* Items */
+
+.emptyState {
+  text-align: center;
+  padding: var(--space-xxl) var(--space-xl);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+}
+
+.emptyText {
+  font-family: var(--font-accent);
+  font-size: 1.8rem;
+  color: var(--text-main);
+  margin-bottom: var(--space-sm);
+}
+
+.emptySubtext {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.itemCard {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.itemContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.itemHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.itemTitle {
+  font-family: var(--font-ui);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.priorityBadge {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  padding: 2px 10px;
+}
+
+.priority1 {
+  background: rgba(196, 109, 54, 0.15);
+  color: var(--accent-baked);
+}
+
+.priority2 {
+  background: rgba(74, 46, 27, 0.08);
+  color: var(--text-muted);
+}
+
+.priority3 {
+  background: rgba(74, 46, 27, 0.05);
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.itemLink {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-baked);
+  text-decoration: none;
+}
+
+.itemLink:hover {
+  text-decoration: underline;
+}
+
+.itemNotes {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.itemActions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.editBtn {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: color 0.15s ease;
+}
+
+.editBtn:hover {
+  color: var(--text-main);
+}
+
+.removeBtn {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: color 0.15s ease;
+}
+
+.removeBtn:hover:not(:disabled) {
+  color: #c0392b;
+}
+
+.removeBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Purchased state (friend view) */
+.itemPurchased {
+  opacity: 0.6;
+}
+
+.purchasedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #2ecc71;
+  background: rgba(46, 204, 113, 0.12);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+}
+
+.markPurchasedBtn {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent-baked);
+  background: rgba(196, 109, 54, 0.1);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-xs) var(--space-md);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.markPurchasedBtn:hover:not(:disabled) {
+  background: rgba(196, 109, 54, 0.2);
+}
+
+.markPurchasedBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .itemCard {
+    flex-direction: column;
+  }
+}

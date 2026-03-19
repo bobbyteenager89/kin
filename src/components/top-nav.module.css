@@ -63,6 +63,11 @@
   opacity: 1;
 }
 
+.navLinkActive {
+  opacity: 1;
+  color: var(--accent-baked);
+}
+
 .btnPrimary {
   background: var(--accent-baked);
   color: var(--accent-cream);

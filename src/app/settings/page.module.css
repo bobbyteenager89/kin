@@ -1,0 +1,40 @@
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-xl);
+}
+
+.pageTitle {
+  font-family: var(--font-accent);
+  font-size: 2.8rem;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+.pageSubtitle {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-top: var(--space-xs);
+}
+
+.backLink {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+  white-space: nowrap;
+  margin-top: var(--space-sm);
+}
+
+.backLink:hover {
+  color: var(--text-main);
+}

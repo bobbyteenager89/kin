@@ -1,0 +1,181 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.hint {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+}
+
+.error {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: #c0392b;
+  background: rgba(192, 57, 43, 0.08);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+}
+
+.emptyState {
+  text-align: center;
+  padding: var(--space-xxl) var(--space-xl);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+}
+
+.emptyText {
+  font-family: var(--font-accent);
+  font-size: 1.8rem;
+  color: var(--text-main);
+  margin-bottom: var(--space-sm);
+}
+
+.emptySubtext {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.itemCard {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  transition: opacity 0.2s ease;
+}
+
+.itemPurchased {
+  opacity: 0.75;
+}
+
+.itemContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.itemHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.itemTitle {
+  font-family: var(--font-ui);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.priorityBadge {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  padding: 2px 10px;
+}
+
+.priority1 {
+  background: rgba(196, 109, 54, 0.15);
+  color: var(--accent-baked);
+}
+
+.priority2 {
+  background: rgba(74, 46, 27, 0.08);
+  color: var(--text-muted);
+}
+
+.priority3 {
+  background: rgba(74, 46, 27, 0.05);
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.purchasedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #27ae60;
+  background: rgba(39, 174, 96, 0.1);
+  border-radius: var(--radius-pill);
+  padding: 2px 10px;
+}
+
+.itemLink {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-baked);
+  text-decoration: none;
+}
+
+.itemLink:hover {
+  text-decoration: underline;
+}
+
+.itemNotes {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.markBtn {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent-baked);
+  background: rgba(196, 109, 54, 0.1);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.markBtn:hover:not(:disabled) {
+  background: rgba(196, 109, 54, 0.2);
+}
+
+.markBtnActive {
+  color: #27ae60;
+  background: rgba(39, 174, 96, 0.12);
+}
+
+.markBtnActive:hover:not(:disabled) {
+  background: rgba(39, 174, 96, 0.2);
+}
+
+.markBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .itemCard {
+    flex-direction: column;
+  }
+}

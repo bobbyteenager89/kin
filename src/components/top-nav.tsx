@@ -2,6 +2,7 @@
 
 import { UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { SearchIcon } from './search-icon';
 import { NotificationBell } from './notification-bell';
 import styles from './top-nav.module.css';
@@ -21,6 +22,13 @@ interface TopNavProps {
 }
 
 export function TopNav({ onSearch, onAddPerson, notifications = [] }: TopNavProps) {
+  const pathname = usePathname();
+
+  function isActive(href: string) {
+    if (href === '/') return pathname === '/';
+    return pathname.startsWith(href);
+  }
+
   return (
     <header className={styles.topNav}>
       <Link href="/" className={styles.brand}>kin</Link>
@@ -35,12 +43,20 @@ export function TopNav({ onSearch, onAddPerson, notifications = [] }: TopNavProp
       </div>
 
       <nav className={styles.navRight}>
-        <Link href="/" className={styles.navLink}>Dashboard</Link>
-        <Link href="/wishlist" className={styles.navLink}>Wishlist</Link>
-        <Link href="/settings" className={styles.navLink}>Settings</Link>
-        <button className={styles.btnPrimary} onClick={onAddPerson}>
-          + Add Person
-        </button>
+        <Link href="/" className={`${styles.navLink} ${isActive('/') ? styles.navLinkActive : ''}`}>
+          Dashboard
+        </Link>
+        <Link href="/wishlist" className={`${styles.navLink} ${isActive('/wishlist') ? styles.navLinkActive : ''}`}>
+          Wishlist
+        </Link>
+        <Link href="/settings" className={`${styles.navLink} ${isActive('/settings') ? styles.navLinkActive : ''}`}>
+          Settings
+        </Link>
+        {onAddPerson && (
+          <button className={styles.btnPrimary} onClick={onAddPerson}>
+            + Add Person
+          </button>
+        )}
         <NotificationBell initialNotifications={notifications} />
         <UserButton />
       </nav>
