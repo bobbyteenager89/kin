@@ -1,0 +1,19 @@
+.authCenter {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  margin: calc(-1 * var(--space-xl)) calc(-1 * var(--space-xxl));
+}
+
+.brand {
+  font-family: var(--font-brand);
+  font-size: 6rem;
+  color: var(--accent-baked);
+  line-height: 0.8;
+  text-shadow: 2px 4px 12px rgba(74, 46, 27, 0.15);
+  transform: rotate(-3deg);
+  letter-spacing: 2px;
+}
