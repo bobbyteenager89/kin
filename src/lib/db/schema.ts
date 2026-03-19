@@ -1,27 +1,47 @@
 import { pgTable, uuid, text, date, boolean, timestamp, jsonb, pgEnum, integer } from 'drizzle-orm/pg-core';
 
+// ── Enums ──────────────────────────────────────────────────
+
 export const eventTypeEnum = pgEnum('event_type', [
-  'birthday', 'anniversary', 'kids_birthday', 'address_change', 'custom',
+  'birthday', 'anniversary', 'kids_birthday', 'custom',
 ]);
 
 export const eventSourceEnum = pgEnum('event_source', [
-  'manual', 'gmail_import', 'calendar_sync', 'public_calendar', 'ai_generated',
+  'manual', 'address_request',
 ]);
 
-export const importStatusEnum = pgEnum('import_status', [
-  'pending', 'approved', 'dismissed',
+export const tierEnum = pgEnum('tier', [
+  'everyone', 'friends', 'inner_circle',
 ]);
+
+export const friendshipStatusEnum = pgEnum('friendship_status', [
+  'pending', 'active',
+]);
+
+export const addressRequestStatusEnum = pgEnum('address_request_status', [
+  'pending', 'completed', 'expired',
+]);
+
+export const notificationTypeEnum = pgEnum('notification_type', [
+  'added_to_circle', 'address_request', 'birthday_reminder',
+  'verify_address', 'wishlist_purchased',
+]);
+
+// ── Users ──────────────────────────────────────────────────
 
 export const users = pgTable('users', {
-  id: text('id').primaryKey(),
+  id: text('id').primaryKey(), // Clerk user ID
+  phone: text('phone'),
+  city: text('city'),
+  bio: text('bio'),
   notificationPrefs: jsonb('notification_prefs').$type<{
     birthdayDaysBefore: number;
-    anniversaryDaysBefore: number;
     enabled: boolean;
-  }>().default({ birthdayDaysBefore: 1, anniversaryDaysBefore: 7, enabled: true }),
-  aiCalendarQuota: integer('ai_calendar_quota').default(5).notNull(),
+  }>().default({ birthdayDaysBefore: 1, enabled: true }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+// ── Persons (contacts) ────────────────────────────────────
 
 export const persons = pgTable('persons', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -31,7 +51,7 @@ export const persons = pgTable('persons', {
   nickname: text('nickname'),
   avatarUrl: text('avatar_url'),
   relation: text('relation'),
-  birthday: date('birthday'),
+  birthday: date('birthday'), // Sentinel year 1904 if year unknown
   partnerName: text('partner_name'),
   weddingAnniversary: date('wedding_anniversary'),
   address: jsonb('address').$type<{
@@ -40,14 +60,18 @@ export const persons = pgTable('persons', {
     state?: string;
     zip?: string;
   }>(),
+  addressVerifiedAt: timestamp('address_verified_at'),
   phone: text('phone'),
   email: text('email'),
   tags: text('tags').array().default([]),
   notes: text('notes'),
   lastCaughtUp: timestamp('last_caught_up'),
+  tier: tierEnum('tier').default('everyone').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
+
+// ── Children ──────────────────────────────────────────────
 
 export const children = pgTable('children', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -56,51 +80,80 @@ export const children = pgTable('children', {
   birthday: date('birthday'),
 });
 
-export const publicCalendars = pgTable('public_calendars', {
+// ── Friendships (mutual connections) ──────────────────────
+
+export const friendships = pgTable('friendships', {
   id: uuid('id').defaultRandom().primaryKey(),
-  name: text('name').notNull(),
-  category: text('category').notNull(),
-  description: text('description'),
-  iconUrl: text('icon_url'),
-  isAiGenerated: boolean('is_ai_generated').default(false).notNull(),
-  createdByUserId: text('created_by_user_id'),
+  userId: text('user_id').notNull().references(() => users.id),
+  friendUserId: text('friend_user_id').notNull().references(() => users.id),
+  tier: tierEnum('tier').default('everyone').notNull(),
+  status: friendshipStatusEnum('status').default('pending').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+// ── Address Requests ──────────────────────────────────────
+
+export const addressRequests = pgTable('address_requests', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  senderId: text('sender_id').notNull().references(() => users.id),
+  recipientPersonId: uuid('recipient_person_id').notNull().references(() => persons.id, { onDelete: 'cascade' }),
+  token: text('token').notNull().unique(), // URL-safe random string
+  recipientPhone: text('recipient_phone'),
+  recipientEmail: text('recipient_email'),
+  message: text('message'), // Personal note from sender
+  status: addressRequestStatusEnum('status').default('pending').notNull(),
+  expiresAt: timestamp('expires_at').notNull(),
+  respondedAt: timestamp('responded_at'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// ── Wishlists ─────────────────────────────────────────────
+
+export const wishlists = pgTable('wishlists', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id).unique(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const wishlistItems = pgTable('wishlist_items', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  wishlistId: uuid('wishlist_id').notNull().references(() => wishlists.id, { onDelete: 'cascade' }),
+  title: text('title').notNull(),
+  url: text('url'),
+  notes: text('notes'),
+  priority: integer('priority').default(2).notNull(), // 1=high, 3=low
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const wishlistPurchases = pgTable('wishlist_purchases', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  wishlistItemId: uuid('wishlist_item_id').notNull().references(() => wishlistItems.id, { onDelete: 'cascade' }),
+  purchasedByUserId: text('purchased_by_user_id').notNull().references(() => users.id),
+  hiddenFromUserId: text('hidden_from_user_id').notNull().references(() => users.id),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// ── Notifications ─────────────────────────────────────────
+
+export const notifications = pgTable('notifications', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id),
+  type: notificationTypeEnum('type').notNull(),
+  data: jsonb('data').$type<Record<string, unknown>>().default({}).notNull(),
+  read: boolean('read').default(false).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// ── Events ────────────────────────────────────────────────
 
 export const events = pgTable('events', {
   id: uuid('id').defaultRandom().primaryKey(),
   userId: text('user_id').notNull().references(() => users.id),
   personId: uuid('person_id').references(() => persons.id, { onDelete: 'cascade' }),
-  calendarId: uuid('calendar_id').references(() => publicCalendars.id, { onDelete: 'cascade' }),
   type: eventTypeEnum('type').notNull(),
   title: text('title').notNull(),
   date: date('date').notNull(),
   recurring: boolean('recurring').default(false).notNull(),
-  description: text('description'),
-  source: eventSourceEnum('source').notNull(),
-  googleCalendarEventId: text('google_calendar_event_id'),
+  source: eventSourceEnum('source').default('manual').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-});
-
-export const importSuggestions = pgTable('import_suggestions', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  userId: text('user_id').notNull().references(() => users.id),
-  source: text('source').notNull(),
-  emailSubject: text('email_subject').notNull(),
-  extractedData: jsonb('extracted_data').$type<{
-    hostName?: string;
-    eventName?: string;
-    date?: string;
-    location?: string;
-  }>().notNull(),
-  status: importStatusEnum('status').default('pending').notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-});
-
-export const calendarSubscriptions = pgTable('calendar_subscriptions', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  userId: text('user_id').notNull().references(() => users.id),
-  calendarId: uuid('calendar_id').notNull().references(() => publicCalendars.id, { onDelete: 'cascade' }),
-  googleCalendarId: text('google_calendar_id'),
-  subscribedAt: timestamp('subscribed_at').defaultNow().notNull(),
 });
