@@ -1,0 +1,419 @@
+/* ── Address Request Page ──────────────────────────────────── */
+
+.page {
+  min-height: 100vh;
+  background-color: var(--bg-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-md);
+  position: relative;
+}
+
+/* Decorative stamp border effect */
+.page::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle at 0% 50%, rgba(196, 109, 54, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 100% 20%, rgba(196, 109, 54, 0.04) 0%, transparent 40%);
+}
+
+.envelope {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+}
+
+/* Main card styled like a letter */
+.card {
+  background: var(--accent-cream);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-xl);
+  box-shadow:
+    0 20px 60px rgba(74, 46, 27, 0.12),
+    0 4px 16px rgba(74, 46, 27, 0.08),
+    inset 0 2px 0 rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle lined paper effect */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    rgba(138, 101, 76, 0.06) 31px,
+    rgba(138, 101, 76, 0.06) 32px
+  );
+  border-radius: var(--radius-lg);
+  pointer-events: none;
+}
+
+/* Red left margin line */
+.card::after {
+  content: '';
+  position: absolute;
+  top: var(--space-xl); bottom: var(--space-xl);
+  left: 60px;
+  width: 1px;
+  background: rgba(196, 109, 54, 0.15);
+  pointer-events: none;
+}
+
+.cardInner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Gift / heading area ─────────────────────────────────── */
+
+.giftIcon {
+  font-size: 2.5rem;
+  display: block;
+  text-align: center;
+  margin-bottom: var(--space-md);
+  filter: drop-shadow(0 2px 4px rgba(74, 46, 27, 0.12));
+}
+
+.heading {
+  font-family: var(--font-brand);
+  font-size: 2.4rem;
+  color: var(--text-main);
+  text-align: center;
+  line-height: 1.15;
+  margin-bottom: var(--space-sm);
+  letter-spacing: 0.5px;
+}
+
+.subheading {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  color: var(--text-muted);
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: var(--space-xl);
+}
+
+/* ── Personal message ────────────────────────────────────── */
+
+.messageBox {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-xl);
+  border-left: 3px solid var(--accent-baked);
+  position: relative;
+}
+
+.messageLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent-baked);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  display: block;
+}
+
+.messageText {
+  font-family: var(--font-accent);
+  font-size: 1.3rem;
+  color: var(--text-main);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* ── Divider ─────────────────────────────────────────────── */
+
+.divider {
+  border: none;
+  border-top: 2px dashed rgba(138, 101, 76, 0.2);
+  margin: 0 0 var(--space-xl);
+}
+
+/* ── Form ────────────────────────────────────────────────── */
+
+.formTitle {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: var(--space-lg);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.label {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.input {
+  background: var(--bg-input);
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  width: 100%;
+}
+
+.input:focus {
+  border-color: var(--accent-baked);
+  box-shadow: 0 0 0 3px rgba(196, 109, 54, 0.12);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.5;
+  font-weight: 500;
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.fieldRowThree {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.optionalSection {
+  border-top: 2px dashed rgba(138, 101, 76, 0.15);
+  padding-top: var(--space-md);
+}
+
+.optionalLabel {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.optionalLabel::after {
+  content: '— optional';
+  font-size: 0.7rem;
+  opacity: 0.6;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ── Submit button ───────────────────────────────────────── */
+
+.submitBtn {
+  background: var(--accent-baked);
+  color: var(--accent-cream);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-md) var(--space-xl);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 16px rgba(196, 109, 54, 0.25);
+  width: 100%;
+  margin-top: var(--space-md);
+}
+
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: #b3612d;
+  box-shadow: 0 8px 20px rgba(196, 109, 54, 0.3);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── States ──────────────────────────────────────────────── */
+
+/* Expired / completed state */
+.stateCard {
+  background: var(--accent-cream);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow:
+    0 20px 60px rgba(74, 46, 27, 0.12),
+    inset 0 2px 0 rgba(255, 255, 255, 0.8);
+  text-align: center;
+  max-width: 440px;
+  width: 100%;
+}
+
+.stateIcon {
+  font-size: 3rem;
+  margin-bottom: var(--space-md);
+  display: block;
+}
+
+.stateTitle {
+  font-family: var(--font-brand);
+  font-size: 2rem;
+  color: var(--text-main);
+  margin-bottom: var(--space-md);
+}
+
+.stateBody {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+/* ── Success state ───────────────────────────────────────── */
+
+.successCard {
+  background: var(--accent-cream);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow:
+    0 20px 60px rgba(74, 46, 27, 0.12),
+    inset 0 2px 0 rgba(255, 255, 255, 0.8);
+  text-align: center;
+  max-width: 520px;
+  width: 100%;
+}
+
+.successIcon {
+  font-size: 3.5rem;
+  margin-bottom: var(--space-md);
+  display: block;
+}
+
+.successTitle {
+  font-family: var(--font-brand);
+  font-size: 2.2rem;
+  color: var(--text-main);
+  margin-bottom: var(--space-sm);
+}
+
+.successBody {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: var(--space-xl);
+}
+
+.ctaDivider {
+  border: none;
+  border-top: 2px dashed rgba(138, 101, 76, 0.2);
+  margin: var(--space-xl) 0;
+}
+
+.ctaHeading {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: var(--space-md);
+}
+
+.ctaBtn {
+  display: inline-block;
+  background: var(--accent-baked);
+  color: var(--accent-cream);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-md) var(--space-xl);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow: 0 4px 12px rgba(196, 109, 54, 0.25);
+}
+
+.ctaBtn:hover {
+  transform: translateY(-2px);
+  background: #b3612d;
+}
+
+.error {
+  background: rgba(184, 64, 64, 0.08);
+  border: 1px solid rgba(184, 64, 64, 0.3);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: #b84040;
+  font-weight: 600;
+}
+
+/* ── Postmark stamp decoration ───────────────────────────── */
+
+.stamp {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  width: 72px;
+  height: 80px;
+  border: 3px solid rgba(196, 109, 54, 0.25);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2px;
+  background: rgba(196, 109, 54, 0.04);
+}
+
+.stampInner {
+  font-family: var(--font-brand);
+  font-size: 1.4rem;
+  color: var(--accent-baked);
+  opacity: 0.4;
+  line-height: 1;
+}
+
+.stampYear {
+  font-family: var(--font-ui);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent-baked);
+  opacity: 0.4;
+  text-transform: uppercase;
+}

@@ -2,6 +2,7 @@ import { auth } from '@clerk/nextjs/server';
 import { DashboardClient } from '@/components/dashboard-client';
 import { getPersonsByUser } from '@/lib/queries/persons';
 import { getUpcomingEvents } from '@/lib/queries/events';
+import { getAllNotifications } from '@/lib/actions/notifications';
 import type { FriendCardData } from '@/components/friend-card';
 import type { TimelineEventData } from '@/components/timeline';
 
@@ -27,9 +28,10 @@ export default async function DashboardPage() {
   const { userId } = await auth();
   if (!userId) return null; // Middleware handles redirect
 
-  const [personRows, upcomingEvents] = await Promise.all([
+  const [personRows, upcomingEvents, notificationRows] = await Promise.all([
     getPersonsByUser(userId),
     getUpcomingEvents(userId, 8),
+    getAllNotifications(userId),
   ]);
 
   // Find the person with the nearest upcoming event for "featured" slot
@@ -57,6 +59,7 @@ export default async function DashboardPage() {
     <DashboardClient
       persons={friends}
       events={timelineEvents}
+      notifications={notificationRows}
     />
   );
 }

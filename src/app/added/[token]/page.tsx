@@ -1,0 +1,49 @@
+import Link from 'next/link';
+import styles from './page.module.css';
+
+interface PageProps {
+  params: Promise<{ token: string }>;
+}
+
+export default async function AddedPage({ params }: PageProps) {
+  // Token is stored for later — when user signs up we'll match them
+  // For now this page just creates intrigue
+  await params; // consume params (token stored in DB via notification)
+
+  return (
+    <div className={styles.page}>
+      <div className={styles.card}>
+        {/* Decorative eye icon */}
+        <span className={styles.eyeIcon} aria-hidden="true">👀</span>
+
+        <h1 className={styles.heading}>
+          Someone added you to their Kin circle
+        </h1>
+
+        <p className={styles.subheading}>
+          They think you&rsquo;re worth remembering.
+        </p>
+
+        <div className={styles.mysteryBox}>
+          <span className={styles.mysteryLabel}>who is it?</span>
+          <div className={styles.mysteryBlur}>
+            <span className={styles.mysteryName}>?????</span>
+          </div>
+          <p className={styles.mysteryHint}>
+            Sign up to see who added you — and add them back
+          </p>
+        </div>
+
+        <Link href="/sign-up" className={styles.ctaBtn}>
+          See who added you
+        </Link>
+
+        <p className={styles.footnote}>
+          Kin is a personal address book for people who like sending things.
+          <br />
+          No spam. No social feed. Just people you care about.
+        </p>
+      </div>
+    </div>
+  );
+}

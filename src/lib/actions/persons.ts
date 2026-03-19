@@ -5,6 +5,7 @@ import { eq } from 'drizzle-orm';
 import { db } from '../db';
 import { persons, children, events, users } from '../db/schema';
 import { personSchema, type PersonInput } from '../validators/person';
+import { createAddedNotification } from './notifications';
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -117,6 +118,12 @@ export async function createPerson(raw: unknown) {
   }
 
   await syncPersonEvents(userId, person.id, input);
+
+  // If the person has a phone number, create an "added to circle" notification
+  // (SMS delivery via Twilio will be wired up later)
+  if (input.phone) {
+    await createAddedNotification(person.id, userId);
+  }
 
   return person;
 }

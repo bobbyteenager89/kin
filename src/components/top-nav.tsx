@@ -3,14 +3,24 @@
 import { UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import { SearchIcon } from './search-icon';
+import { NotificationBell } from './notification-bell';
 import styles from './top-nav.module.css';
+
+interface Notification {
+  id: string;
+  type: string;
+  data: Record<string, unknown>;
+  read: boolean;
+  createdAt: Date;
+}
 
 interface TopNavProps {
   onSearch?: (query: string) => void;
   onAddPerson?: () => void;
+  notifications?: Notification[];
 }
 
-export function TopNav({ onSearch, onAddPerson }: TopNavProps) {
+export function TopNav({ onSearch, onAddPerson, notifications = [] }: TopNavProps) {
   return (
     <header className={styles.topNav}>
       <Link href="/" className={styles.brand}>kin</Link>
@@ -31,6 +41,7 @@ export function TopNav({ onSearch, onAddPerson }: TopNavProps) {
         <button className={styles.btnPrimary} onClick={onAddPerson}>
           + Add Person
         </button>
+        <NotificationBell initialNotifications={notifications} />
         <UserButton />
       </nav>
     </header>

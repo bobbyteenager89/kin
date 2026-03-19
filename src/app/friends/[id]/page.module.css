@@ -1,0 +1,405 @@
+/* ── Friend Detail Page ────────────────────────────────────── */
+
+.page {
+  min-height: 100vh;
+  padding-bottom: var(--space-xxl);
+}
+
+/* ── Back nav ────────────────────────────────────────────── */
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-bottom: var(--space-xl);
+  opacity: 0.7;
+  transition: opacity 0.15s ease;
+}
+
+.backLink:hover {
+  opacity: 1;
+}
+
+/* ── Hero section ────────────────────────────────────────── */
+
+.hero {
+  background: var(--accent-cream);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  display: grid;
+  grid-template-columns: 160px 1fr auto;
+  gap: var(--space-xl);
+  align-items: start;
+  box-shadow: 0 10px 40px rgba(74, 46, 27, 0.08), inset 0 2px 0 rgba(255, 255, 255, 0.7);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Faint lined paper */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    rgba(138, 101, 76, 0.05) 31px,
+    rgba(138, 101, 76, 0.05) 32px
+  );
+  pointer-events: none;
+  border-radius: var(--radius-lg);
+}
+
+.heroActions {
+  display: flex;
+  gap: var(--space-sm);
+  padding-top: var(--space-xs);
+  position: relative;
+  z-index: 1;
+}
+
+.avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-input);
+  background-size: cover;
+  background-position: center;
+  border: 6px solid var(--bg-card);
+  box-shadow: 0 4px 16px rgba(74, 46, 27, 0.12);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.heroInfo {
+  position: relative;
+  z-index: 1;
+}
+
+.heroBadges {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.heroName {
+  font-family: var(--font-ui);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.1;
+  margin-bottom: var(--space-xs);
+}
+
+.heroNickname {
+  font-family: var(--font-accent);
+  font-size: 1.6rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.heroRelation {
+  font-family: var(--font-accent);
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ── Tier badge ──────────────────────────────────────────── */
+
+.tierBadge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.tier_everyone {
+  background: var(--bg-input);
+  color: var(--text-muted);
+}
+
+.tier_friends {
+  background: rgba(196, 109, 54, 0.12);
+  color: var(--accent-baked);
+}
+
+.tier_inner_circle {
+  background: var(--accent-baked);
+  color: var(--accent-cream);
+}
+
+/* ── Freshness indicator ─────────────────────────────────── */
+
+.freshnessGreen,
+.freshnessYellow,
+.freshnessRed,
+.freshnessNone {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.freshnessGreen { background: #5a9f6e; }
+.freshnessYellow { background: #c9943b; }
+.freshnessRed { background: #b84040; }
+.freshnessNone {
+  background: var(--bg-input);
+  border: 2px solid var(--text-muted);
+  opacity: 0.4;
+}
+
+/* ── Action buttons ──────────────────────────────────────── */
+
+.btnPrimary {
+  background: var(--accent-baked);
+  color: var(--accent-cream);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow: 0 3px 10px rgba(196, 109, 54, 0.2);
+  text-decoration: none;
+}
+
+.btnPrimary:hover {
+  transform: translateY(-1px);
+  background: #b3612d;
+}
+
+.btnSecondary {
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow: 0 2px 8px rgba(74, 46, 27, 0.08);
+  text-decoration: none;
+}
+
+.btnSecondary:hover {
+  transform: translateY(-1px);
+  background: var(--bg-input);
+}
+
+.btnDanger {
+  background: transparent;
+  color: #b84040;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 2px solid rgba(184, 64, 64, 0.3);
+  border-radius: var(--radius-pill);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.btnDanger:hover {
+  background: rgba(184, 64, 64, 0.06);
+  border-color: rgba(184, 64, 64, 0.5);
+}
+
+/* ── Content grid ────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+}
+
+.gridFull {
+  grid-column: 1 / -1;
+}
+
+/* ── Sections ────────────────────────────────────────────── */
+
+.section {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: 0 4px 16px rgba(74, 46, 27, 0.04), inset 0 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.sectionTitle {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+/* ── Detail rows ─────────────────────────────────────────── */
+
+.detailRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px dashed rgba(138, 101, 76, 0.15);
+}
+
+.detailRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.detailRow:first-child {
+  padding-top: 0;
+}
+
+.detailLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.detailValue {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.detailValueAccent {
+  font-family: var(--font-accent);
+  font-size: 1.2rem;
+  color: var(--text-main);
+}
+
+/* ── Address block ───────────────────────────────────────── */
+
+.addressBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.addressText {
+  font-family: var(--font-accent);
+  font-size: 1.25rem;
+  color: var(--text-main);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.addressMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.addressFreshness {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.noAddress {
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-style: italic;
+  margin-bottom: var(--space-md);
+}
+
+/* ── Tags ────────────────────────────────────────────────── */
+
+.tagsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* ── Children ────────────────────────────────────────────── */
+
+.childRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px dashed rgba(138, 101, 76, 0.15);
+}
+
+.childRow:last-child {
+  border-bottom: none;
+}
+
+.childName {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-main);
+}
+
+.childBirthday {
+  font-family: var(--font-accent);
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+/* ── Notes ───────────────────────────────────────────────── */
+
+.notesText {
+  font-family: var(--font-accent);
+  font-size: 1.15rem;
+  color: var(--text-main);
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* ── Last caught up ──────────────────────────────────────── */
+
+.caughtUpRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.caughtUpValue {
+  font-family: var(--font-accent);
+  font-size: 1.2rem;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+/* ── Empty state ─────────────────────────────────────────── */
+
+.empty {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-style: italic;
+  opacity: 0.7;
+}

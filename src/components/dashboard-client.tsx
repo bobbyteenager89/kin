@@ -8,12 +8,21 @@ import { FriendCard, type FriendCardData } from './friend-card';
 import { PersonDrawer } from './person-drawer';
 import styles from './dashboard-client.module.css';
 
+interface Notification {
+  id: string;
+  type: string;
+  data: Record<string, unknown>;
+  read: boolean;
+  createdAt: Date;
+}
+
 interface DashboardClientProps {
   persons: FriendCardData[];
   events: TimelineEventData[];
+  notifications?: Notification[];
 }
 
-export function DashboardClient({ persons, events }: DashboardClientProps) {
+export function DashboardClient({ persons, events, notifications = [] }: DashboardClientProps) {
   const router = useRouter();
   const [search, setSearch] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -36,7 +45,7 @@ export function DashboardClient({ persons, events }: DashboardClientProps) {
 
   return (
     <>
-      <TopNav onSearch={setSearch} onAddPerson={() => setDrawerOpen(true)} />
+      <TopNav onSearch={setSearch} onAddPerson={() => setDrawerOpen(true)} notifications={notifications} />
 
       <main className={styles.dashboardGrid}>
         <Timeline events={events} />

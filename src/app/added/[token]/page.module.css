@@ -1,0 +1,143 @@
+/* ── You've Been Added Page ────────────────────────────────── */
+
+.page {
+  min-height: 100vh;
+  background-color: var(--bg-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-md);
+}
+
+.card {
+  background: var(--accent-cream);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xxl) var(--space-xl);
+  box-shadow:
+    0 24px 64px rgba(74, 46, 27, 0.14),
+    0 4px 16px rgba(74, 46, 27, 0.08),
+    inset 0 2px 0 rgba(255, 255, 255, 0.8);
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+}
+
+.eyeIcon {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: var(--space-lg);
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(74, 46, 27, 0.15));
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.heading {
+  font-family: var(--font-brand);
+  font-size: 2.6rem;
+  color: var(--text-main);
+  line-height: 1.15;
+  margin-bottom: var(--space-md);
+  letter-spacing: 0.5px;
+}
+
+.subheading {
+  font-family: var(--font-accent);
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-xl);
+  font-weight: 500;
+}
+
+/* ── Mystery box ─────────────────────────────────────────── */
+
+.mysteryBox {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl) var(--space-lg);
+  margin-bottom: var(--space-xl);
+  border: 2px dashed rgba(138, 101, 76, 0.25);
+  position: relative;
+}
+
+.mysteryLabel {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent-baked);
+  font-weight: 700;
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
+.mysteryBlur {
+  position: relative;
+  margin-bottom: var(--space-md);
+}
+
+.mysteryName {
+  font-family: var(--font-brand);
+  font-size: 2.8rem;
+  color: var(--text-main);
+  filter: blur(8px);
+  user-select: none;
+  display: block;
+  line-height: 1;
+}
+
+/* Locked overlay */
+.mysteryBlur::after {
+  content: '🔒';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.8rem;
+  filter: none;
+}
+
+.mysteryHint {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* ── CTA button ──────────────────────────────────────────── */
+
+.ctaBtn {
+  display: inline-block;
+  background: var(--accent-baked);
+  color: var(--accent-cream);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 1.15rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-md) var(--space-xxl);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 6px 20px rgba(196, 109, 54, 0.3);
+  margin-bottom: var(--space-xl);
+}
+
+.ctaBtn:hover {
+  transform: translateY(-3px);
+  background: #b3612d;
+  box-shadow: 0 10px 28px rgba(196, 109, 54, 0.35);
+}
+
+/* ── Footnote ────────────────────────────────────────────── */
+
+.footnote {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  line-height: 1.7;
+  opacity: 0.7;
+}

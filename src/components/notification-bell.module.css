@@ -1,0 +1,181 @@
+/* ── Notification Bell ─────────────────────────────────────── */
+
+.wrapper {
+  position: relative;
+}
+
+.bell {
+  background: var(--bg-card);
+  border: none;
+  border-radius: var(--radius-pill);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-main);
+  transition: background 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 2px 8px rgba(74, 46, 27, 0.08);
+  position: relative;
+}
+
+.bell:hover {
+  background: var(--bg-input);
+  transform: translateY(-1px);
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--accent-baked);
+  color: var(--accent-cream);
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid var(--bg-base);
+}
+
+/* ── Dropdown ────────────────────────────────────────────── */
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--accent-cream);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 16px 48px rgba(74, 46, 27, 0.16),
+    0 4px 12px rgba(74, 46, 27, 0.08),
+    inset 0 2px 0 rgba(255, 255, 255, 0.8);
+  width: 320px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 200;
+}
+
+.dropdownHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 2px dashed rgba(138, 101, 76, 0.15);
+}
+
+.dropdownTitle {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.markAllBtn {
+  background: transparent;
+  border: none;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-baked);
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.15s ease;
+}
+
+.markAllBtn:hover {
+  opacity: 0.7;
+}
+
+.markAllBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── List ────────────────────────────────────────────────── */
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  cursor: pointer;
+  transition: background 0.1s ease;
+  border-bottom: 1px solid rgba(138, 101, 76, 0.08);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.item:hover {
+  background: var(--bg-card);
+}
+
+.itemUnread {
+  background: rgba(196, 109, 54, 0.04);
+}
+
+.itemUnread:hover {
+  background: rgba(196, 109, 54, 0.08);
+}
+
+.itemContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.itemTitle {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.4;
+  margin-bottom: 2px;
+}
+
+.itemTime {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.unreadDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-baked);
+  flex-shrink: 0;
+}
+
+/* ── Empty state ─────────────────────────────────────────── */
+
+.empty {
+  padding: var(--space-xl);
+  text-align: center;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.emptyIcon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: var(--space-sm);
+  opacity: 0.5;
+}
