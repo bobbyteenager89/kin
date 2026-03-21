@@ -1,10 +1,13 @@
 {
-  "name": "Kin",
+  "name": "Kin — Personal CRM",
   "short_name": "Kin",
   "description": "Remember the people you care about",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#E8D8CE",
-  "theme_color": "#4A2E1B",
-  "icons": []
+  "theme_color": "#C46D36",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
 }

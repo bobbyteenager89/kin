@@ -1,6 +1,24 @@
+import type { Metadata } from 'next';
 import { getAddressRequestByToken } from '@/lib/actions/address-requests';
 import { AddressForm } from './address-form';
 import styles from './page.module.css';
+
+export async function generateMetadata({ params }: { params: Promise<{ token: string }> }): Promise<Metadata> {
+  const { token } = await params;
+  const request = await getAddressRequestByToken(token);
+  const senderName = request?.senderName ?? 'Someone';
+
+  return {
+    title: `${senderName} wants to send you something — Kin`,
+    description: 'Share your address securely. Takes 30 seconds.',
+    openGraph: {
+      title: `🎁 ${senderName} wants to send you something`,
+      description: 'Tap to share your address securely with Kin',
+      type: 'website',
+      images: ['/og-address-request.png'],
+    },
+  };
+}
 
 interface PageProps {
   params: Promise<{ token: string }>;

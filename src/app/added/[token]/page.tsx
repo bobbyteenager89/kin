@@ -1,6 +1,17 @@
 import Link from 'next/link';
 import styles from './page.module.css';
 
+export const metadata = {
+  title: 'Someone added you to their circle — Kin',
+  description: 'See who added you to their Kin circle',
+  openGraph: {
+    title: '👀 Someone added you to their circle',
+    description: 'Sign up to see who — it only takes a moment',
+    type: 'website',
+    images: ['/og-added.png'],
+  },
+};
+
 interface PageProps {
   params: Promise<{ token: string }>;
 }
