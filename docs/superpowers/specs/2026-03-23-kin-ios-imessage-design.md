@@ -69,7 +69,8 @@ The iMessage extension is the viral engine — it makes sending an address reque
 3. Token stored in App Group Keychain via `KeychainHelper`
 4. All API calls: `Authorization: Bearer <clerk-session-token>`
 5. iMessage extension reads token from shared Keychain — no separate login needed
-6. Token refresh handled by Clerk SDK automatically
+6. Token refresh handled by Clerk SDK in main app. **Extension fallback:** if token is expired when extension opens, show "Open Kin to sign in" button that deep-links to the main app. Extension cannot refresh tokens independently.
+7. Clerk iOS SDK: use `ClerkSDK` via SPM (`https://github.com/clerk/clerk-ios`). Extension reads token from Keychain only — does NOT initialize `Clerk.shared`.
 
 ## API Layer
 
@@ -95,15 +96,24 @@ All authenticated via Clerk session token. Returns JSON.
 
 ## iMessage Extension
 
+### Local Contacts Cache
+
+The iMessage extension needs fast access to the user's Kin contacts without a network call on every open. Cache strategy:
+
+- Main app writes contacts list to App Group `UserDefaults` as JSON on every sync
+- Extension reads from this cache on launch — zero network latency
+- Cache includes: personId, name, phone, birthday, tier, addressVerifiedAt
+- TTL: 1 hour. If stale, extension fetches fresh in background but shows cached immediately
+- Main app updates cache on: person create/update/delete, pull-to-refresh
+
 ### Compact Mode
 
 The bar at the bottom of iMessage when Kin is selected from the app drawer.
 
-- Detects current conversation partner's phone number via `MSConversation`
-- Matches against user's Kin contacts (cached locally)
-- **If match found:** Shows "📮 Request [Name]'s address" — one tap creates request + inserts bubble
-- **If no match:** Shows "📮 Send address request" — tap expands to full view
-- **Birthday bonus:** If matched contact has birthday within 7 days, shows "🎂 [Name]'s birthday in [N] days"
+- **Note:** `MSConversation` does NOT expose the conversation partner's phone number. The opaque participant identifiers cannot be matched to contacts.
+- Instead, compact mode shows a simple branded prompt: "📮 Send address request" — tapping expands to the contact picker
+- **If only 1 recent contact:** show "📮 Request [last-used name]'s address" for quick repeat
+- **Birthday bonus:** If ANY Kin contact has birthday within 7 days, show "🎂 [Name]'s birthday in [N] days" (from cached contacts)
 
 ### Expanded Mode
 
@@ -115,7 +125,8 @@ Full-screen overlay when user taps to expand.
   - Personal message text field
   - Preview of what recipient sees
   - "Send Request" button
-- Creates address request via API, inserts MSMessage bubble
+- Creates address request via API (loading spinner on button), then inserts MSMessage bubble
+- **Error states:** If API call fails → show inline error, retry button. If `conversation.insert` fails → show "Couldn't send. Try again." Button disabled during send.
 
 ### Message Bubble
 
@@ -229,10 +240,12 @@ static let bgPaper = Color(hex: "#FFFFFF")
 static let bgPaperDark = Color(hex: "#F0F4F7")
 static let inkDark = Color(hex: "#2C3E50")
 static let inkLight = Color(hex: "#7F8C8D")
-static let accentOlive = Color(hex: "#34495E")
-static let accentRust = Color(hex: "#4A90E2")
-static let accentTeal = Color(hex: "#1ABC9C")
+static let accentOlive = Color(hex: "#34495E")   // Primary buttons, dark UI
+static let accentBlue = Color(hex: "#4A90E2")     // Links, dates, interactive
+static let accentTeal = Color(hex: "#1ABC9C")     // Fresh/verified status
 ```
+
+Note: The iOS palette matches the updated web design (Variant v2). Both use Cormorant Garamond + Inter, paper/ink palette. WebView screens will be visually consistent.
 
 ### Typography
 - **Display/names:** Cormorant Garamond, 18-28px, medium/semibold weight
@@ -248,17 +261,30 @@ static let accentTeal = Color(hex: "#1ABC9C")
 ### Spacing
 Matches web: xs=4, sm=8, md=16, lg=24, xl=32
 
+## Push Notification Infrastructure
+
+- **Package:** Direct HTTP/2 to APNs (no npm dependency — use `fetch` with APNs endpoint)
+- **Auth:** APNs Auth Key (`.p8` file) — generate in Apple Developer portal, store as Vercel env vars (`APNS_KEY_ID`, `APNS_TEAM_ID`, `APNS_KEY_BASE64`)
+- **Sending:** From Next.js API route `/api/cron/send-notifications`, sign JWT with the `.p8` key, POST to `api.push.apple.com`
+- **Schema addition:** `push_tokens` table (id, userId, token, platform, createdAt)
+
 ## App Store Requirements
 
 - **Bundle ID:** `com.kinapp.kin`
 - **iMessage Extension Bundle ID:** `com.kinapp.kin.messages`
 - **App Group:** `group.com.kinapp.shared`
+- **Keychain Access Group:** `$(AppIdentifierPrefix)group.com.kinapp.shared` (both targets)
 - **Minimum iOS:** 17.0
-- **Capabilities:** Push Notifications, App Groups, Contacts (usage description)
+- **Capabilities:** Push Notifications, App Groups, Keychain Sharing, Contacts
+- **Info.plist keys:**
+  - `NSContactsUsageDescription`: "Kin uses your contacts to help you find friends and send address requests."
+  - `NSUserNotificationsUsageDescription`: "Kin sends birthday reminders and address request updates."
+- **Privacy Manifest:** `PrivacyInfo.xcprivacy` in both targets — declare `NSPrivacyAccessedAPITypes` for Contacts, UserDefaults (App Group)
+- **iMessage Extension Info.plist:** `NSExtensionPrincipalClass` set to `$(PRODUCT_MODULE_NAME).MessagesViewController`
 
 ## Dependencies
 
-- **Clerk iOS SDK** — `@clerk/clerk-ios` via SPM
+- **Clerk iOS SDK** — `ClerkSDK` via SPM (`https://github.com/clerk/clerk-ios`)
 - **No other external dependencies** — use URLSession, SwiftUI, Contacts framework natively
 
 ## What This Spec Does NOT Cover
