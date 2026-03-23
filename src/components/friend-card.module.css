@@ -1,171 +1,103 @@
-.friendCard {
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(74, 46, 27, 0.05), inset 0 2px 0 rgba(255, 255, 255, 0.5);
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
-}
-
-.friendCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(74, 46, 27, 0.08), inset 0 2px 0 rgba(255, 255, 255, 0.6);
-}
-
-.featured {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: var(--space-lg);
-  background: var(--accent-cream);
-  padding: var(--space-xl);
-  flex-direction: row;
-}
-
-.cardHeader {
+.rosterRow {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  margin-bottom: var(--space-md);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid rgba(44, 62, 80, 0.07);
+  text-decoration: none;
+  color: inherit;
+  background: var(--bg-paper);
+  transition: background 0.15s;
 }
 
-.cardHeaderText {
+.rosterRow:hover {
+  background: var(--bg-paper-dark);
+}
+
+.squareAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 2px;
+  background-color: var(--bg-paper-dark);
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(44, 62, 80, 0.1);
+}
+
+.avatarInitial {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink-light);
+  line-height: 1;
+}
+
+.rowInfo {
   flex: 1;
   min-width: 0;
 }
 
-.cardMeta {
+.rowName {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink-dark);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rowMeta {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-sm);
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--ink-light);
+  margin-top: 2px;
 }
 
-.cardFooter {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  margin-top: auto;
-}
-
-.avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-pill);
-  background-color: var(--bg-input);
-  background-size: cover;
-  background-position: center;
-  border: 3px solid var(--accent-cream);
-  box-shadow: 0 4px 10px rgba(74, 46, 27, 0.1);
+.freshnessDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
   flex-shrink: 0;
 }
 
-.avatarFeatured {
-  width: 140px;
-  height: 140px;
-  border-width: 6px;
+.dotTeal {
+  background: var(--accent-teal);
 }
 
-.friendName {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--text-main);
-  line-height: 1.2;
+.dotGrey {
+  background: var(--ink-light);
+  opacity: 0.4;
 }
 
-.friendNameFeatured {
-  font-size: 2.5rem;
-  margin-bottom: var(--space-xs);
-}
-
-.friendRelation {
-  font-family: var(--font-accent);
-  font-size: 1.2rem;
-  color: var(--text-muted);
-}
-
-.friendRelationFeatured {
-  font-size: 1.6rem;
-}
-
-.metaTags {
+.rowTrailing {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
+  align-items: center;
+  flex-shrink: 0;
 }
 
-.featuredDetails {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-md);
-  margin-top: var(--space-md);
-  padding-top: var(--space-md);
-  border-top: 2px dashed rgba(138, 101, 76, 0.2);
-}
-
-.detailGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.detailLabel {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text-muted);
-  font-weight: 700;
-}
-
-.detailValue {
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-/* Tier badge */
-.tierBadge {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 2px 8px;
-  border-radius: var(--radius-pill);
-}
-
-.tier_everyone {
-  background: var(--bg-input);
-  color: var(--text-muted);
-}
-
-.tier_friends {
-  background: rgba(196, 109, 54, 0.12);
-  color: var(--accent-baked);
-}
-
-.tier_inner_circle {
-  background: var(--accent-baked);
-  color: var(--accent-cream);
-}
-
-/* Freshness indicator */
+/* Freshness indicator dots (used in rowTrailing) */
 .freshnessGreen,
 .freshnessYellow,
 .freshnessRed,
 .freshnessNone {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
   display: inline-block;
 }
 
 .freshnessGreen {
-  background: #5a9f6e;
+  background: var(--accent-teal);
 }
 
 .freshnessYellow {
@@ -177,7 +109,7 @@
 }
 
 .freshnessNone {
-  background: var(--bg-input);
-  border: 2px solid var(--text-muted);
+  background: var(--bg-paper-dark);
+  border: 1px solid var(--ink-light);
   opacity: 0.4;
 }

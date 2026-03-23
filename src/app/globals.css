@@ -1,34 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Grand+Hotel&family=Quicksand:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@400;500&display=swap');
 
 :root {
-  --bg-base: #E8D8CE;
-  --bg-card: #F2E5DD;
-  --bg-input: #EFE0D7;
-  --text-main: #4A2E1B;
-  --text-muted: #8A654C;
-  --accent-cream: #FCF9F5;
-  --accent-baked: #C46D36;
-  --font-brand: 'Grand Hotel', cursive;
-  --font-accent: 'Caveat', cursive;
-  --font-ui: 'Quicksand', sans-serif;
+  --bg-paper: #FFFFFF;
+  --bg-paper-dark: #F0F4F7;
+  --ink-dark: #2C3E50;
+  --ink-light: #7F8C8D;
+  --accent-olive: #34495E;
+  --accent-rust: #4A90E2;
+  --accent-teal: #1ABC9C;
+
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Backward compat mapping */
+  --bg-base: var(--bg-paper-dark);
+  --bg-card: var(--bg-paper);
+  --bg-input: var(--bg-paper-dark);
+  --text-main: var(--ink-dark);
+  --text-muted: var(--ink-light);
+  --accent-cream: var(--bg-paper);
+  --accent-baked: var(--accent-olive);
+  --font-brand: var(--font-serif);
+  --font-accent: var(--font-serif);
+  --font-ui: var(--font-sans);
+
+  /* Legacy spacing aliases */
+  --space-xs: var(--spacing-xs);
+  --space-sm: var(--spacing-sm);
+  --space-md: var(--spacing-md);
+  --space-lg: var(--spacing-lg);
+  --space-xl: var(--spacing-xl);
+  --space-xxl: 48px;
+
+  /* Legacy radius aliases */
+  --radius-lg: var(--radius-md);
   --radius-pill: 999px;
-  --radius-lg: 32px;
-  --radius-md: 20px;
-  --radius-sm: 12px;
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 40px;
-  --space-xxl: 64px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background-color: var(--bg-base);
-  color: var(--text-main);
-  font-family: var(--font-ui);
+  background-color: var(--bg-paper-dark);
+  color: var(--ink-dark);
+  font-family: var(--font-sans);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
@@ -41,12 +63,13 @@ body::before {
   top: 0; left: 0; width: 100vw; height: 100vh;
   pointer-events: none;
   z-index: 999;
-  opacity: 0.05;
+  opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 .canvas {
-  max-width: 1400px;
+  max-width: 400px;
   margin: 0 auto;
-  padding: var(--space-xl) var(--space-xxl);
+  padding: 0;
+  min-height: 100vh;
 }

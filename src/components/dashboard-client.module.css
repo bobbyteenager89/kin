@@ -1,35 +1,31 @@
-.dashboardGrid {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: var(--space-xxl);
-  align-items: start;
+.dashboardMain {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-paper);
+  min-height: calc(100vh - 61px);
+}
+
+.rosterSection {
+  flex: 1;
 }
 
 .sectionHeader {
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-sm);
+  border-bottom: 1px solid rgba(44, 62, 80, 0.08);
+}
+
+.sectionLabel {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+}
+
+.rosterList {
   display: flex;
-  align-items: baseline;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
-}
-
-.sectionTitle {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.sectionAccent {
-  font-family: var(--font-accent);
-  color: var(--accent-baked);
-  font-size: 1.8rem;
-  transform: rotate(-5deg);
-  display: inline-block;
-}
-
-.rosterGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--space-lg);
+  flex-direction: column;
 }
 
 /* Empty state */
@@ -38,42 +34,39 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--space-xxl) var(--space-xl);
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
+  padding: 48px var(--spacing-lg);
   text-align: center;
-  gap: var(--space-md);
-  box-shadow: 0 10px 30px rgba(74, 46, 27, 0.05), inset 0 2px 0 rgba(255, 255, 255, 0.5);
+  gap: var(--spacing-md);
 }
 
 .emptyText {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-main);
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink-dark);
 }
 
 .emptySubtext {
-  font-family: var(--font-accent);
-  font-size: 1.6rem;
-  color: var(--text-muted);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ink-light);
 }
 
 .emptyCtaBtn {
-  background: var(--accent-baked);
-  color: var(--accent-cream);
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: 1.1rem;
+  background: var(--accent-olive);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 16px;
   border: none;
-  border-radius: var(--radius-pill);
-  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
-  box-shadow: 0 4px 12px rgba(196, 109, 54, 0.2);
-  margin-top: var(--space-md);
+  margin-top: var(--spacing-sm);
+  transition: opacity 0.15s;
 }
 
 .emptyCtaBtn:hover {
-  transform: translateY(-2px);
-  background: #b3612d;
+  opacity: 0.85;
 }

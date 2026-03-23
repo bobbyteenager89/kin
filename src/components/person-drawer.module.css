@@ -1,71 +1,73 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(74, 46, 27, 0.2);
+  background: rgba(44, 62, 80, 0.2);
   backdrop-filter: blur(2px);
   z-index: 100;
 }
 
 .drawer {
   position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: 520px;
-  max-width: 95vw;
-  background: var(--bg-card);
-  box-shadow: -8px 0 40px rgba(74, 46, 27, 0.12);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 400px;
+  height: 90vh;
+  background: var(--bg-paper);
+  box-shadow: 0 -8px 40px rgba(44, 62, 80, 0.12);
   z-index: 101;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border-radius: 20px 20px 0 0;
 }
 
 .drawerHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-xl) var(--space-xl) var(--space-lg);
-  border-bottom: 2px dashed rgba(138, 101, 76, 0.15);
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md);
+  border-bottom: 1px solid rgba(44, 62, 80, 0.08);
   flex-shrink: 0;
 }
 
 .drawerTitle {
-  font-family: var(--font-brand);
-  font-size: 2.5rem;
-  color: var(--text-main);
-  transform: rotate(-1deg);
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink-dark);
   line-height: 1;
 }
 
 .closeBtn {
   background: none;
   border: none;
-  font-size: 1.2rem;
-  color: var(--text-muted);
+  font-size: 18px;
+  color: var(--ink-light);
   cursor: pointer;
-  padding: var(--space-sm);
+  padding: 4px 8px;
   border-radius: var(--radius-sm);
   transition: color 0.15s;
 }
 
 .closeBtn:hover {
-  color: var(--text-main);
+  color: var(--ink-dark);
 }
 
 .form {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-xl);
+  padding: var(--spacing-lg);
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: var(--spacing-lg);
 }
 
 .section {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--spacing-sm);
 }
 
 .sectionRow {
@@ -75,17 +77,19 @@
 }
 
 .sectionLabel {
-  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-weight: 700;
-  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  color: var(--ink-light);
+  margin-bottom: 4px;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: 4px;
   flex: 1;
 }
 
@@ -95,37 +99,38 @@
 
 .fieldRow {
   display: flex;
-  gap: var(--space-md);
+  gap: var(--spacing-sm);
 }
 
 .label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-light);
+  letter-spacing: 0.02em;
 }
 
 .input {
-  background: var(--bg-base);
-  border: none;
+  background: var(--bg-paper-dark);
+  border: 1px solid rgba(44, 62, 80, 0.1);
   border-radius: var(--radius-sm);
-  padding: var(--space-sm) var(--space-md);
-  font-family: var(--font-ui);
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-main);
+  padding: 8px var(--spacing-sm);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ink-dark);
   outline: none;
-  transition: box-shadow 0.15s;
+  transition: border-color 0.15s;
   width: 100%;
 }
 
 .input:focus {
-  box-shadow: 0 0 0 2px var(--accent-baked);
+  border-color: var(--accent-rust);
 }
 
 .input::placeholder {
-  color: var(--text-muted);
-  opacity: 0.5;
-  font-weight: 500;
+  color: var(--ink-light);
+  opacity: 0.6;
 }
 
 .textarea {
@@ -136,17 +141,17 @@
 /* Children */
 .childRow {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
   align-items: center;
 }
 
 .addChildBtn {
   background: none;
   border: none;
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: var(--accent-baked);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--accent-rust);
   cursor: pointer;
   padding: 0;
 }
@@ -154,8 +159,8 @@
 .removeChildBtn {
   background: none;
   border: none;
-  font-size: 0.9rem;
-  color: var(--text-muted);
+  font-size: 14px;
+  color: var(--ink-light);
   cursor: pointer;
   flex-shrink: 0;
   opacity: 0.6;
@@ -169,15 +174,15 @@
 /* Tier selector */
 .tierOptions {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--spacing-sm);
 }
 
 .tierBtn {
   flex: 1;
-  background: var(--bg-base);
-  border: 2px solid transparent;
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
+  background: var(--bg-paper-dark);
+  border: 1px solid rgba(44, 62, 80, 0.1);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm);
   cursor: pointer;
   text-align: left;
   transition: border-color 0.15s;
@@ -187,83 +192,85 @@
 }
 
 .tierBtn:hover {
-  border-color: rgba(196, 109, 54, 0.3);
+  border-color: rgba(44, 62, 80, 0.3);
 }
 
 .tierBtnActive {
-  border-color: var(--accent-baked);
-  background: rgba(196, 109, 54, 0.05);
+  border-color: var(--accent-olive);
+  background: rgba(52, 73, 94, 0.05);
 }
 
 .tierBtnLabel {
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--ink-dark);
 }
 
 .tierBtnDesc {
-  font-size: 0.8rem;
-  color: var(--text-muted);
+  font-size: 11px;
+  color: var(--ink-light);
 }
 
 /* Actions */
 .formActions {
   display: flex;
-  gap: var(--space-md);
-  padding-top: var(--space-md);
-  border-top: 2px dashed rgba(138, 101, 76, 0.15);
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(44, 62, 80, 0.08);
   position: sticky;
   bottom: 0;
-  background: var(--bg-card);
-  margin: 0 calc(-1 * var(--space-xl));
-  padding: var(--space-lg) var(--space-xl);
+  background: var(--bg-paper);
+  margin: 0 calc(-1 * var(--spacing-lg));
+  padding: var(--spacing-md) var(--spacing-lg);
 }
 
 .cancelBtn {
-  background: var(--bg-base);
-  border: none;
-  border-radius: var(--radius-pill);
-  padding: var(--space-md) var(--space-xl);
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--text-muted);
+  background: var(--bg-paper-dark);
+  border: 1px solid rgba(44, 62, 80, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 10px var(--spacing-lg);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--ink-light);
   cursor: pointer;
   transition: color 0.15s;
 }
 
 .cancelBtn:hover {
-  color: var(--text-main);
+  color: var(--ink-dark);
 }
 
 .submitBtn {
   flex: 1;
-  background: var(--accent-baked);
-  color: var(--accent-cream);
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: 1.1rem;
+  background: var(--accent-olive);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 16px;
   border: none;
-  border-radius: var(--radius-pill);
-  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-sm);
+  padding: 10px var(--spacing-lg);
   cursor: pointer;
-  transition: background 0.2s;
+  transition: opacity 0.15s;
 }
 
 .submitBtn:hover:not(:disabled) {
-  background: #b3612d;
+  opacity: 0.85;
 }
 
 .submitBtn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .error {
   color: #b84040;
-  font-weight: 600;
-  font-size: 0.95rem;
-  padding: var(--space-sm) var(--space-md);
-  background: rgba(184, 64, 64, 0.08);
+  font-size: 13px;
+  padding: 8px var(--spacing-sm);
+  background: rgba(184, 64, 64, 0.06);
   border-radius: var(--radius-sm);
+  border-left: 2px solid #b84040;
 }

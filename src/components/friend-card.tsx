@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { Tag } from './tag';
 import styles from './friend-card.module.css';
 
 export type Tier = 'everyone' | 'friends' | 'inner_circle';
@@ -24,12 +23,6 @@ export interface FriendCardData {
   addressVerifiedAt?: Date | null;
 }
 
-const TIER_LABELS: Record<Tier, string> = {
-  everyone: 'Everyone',
-  friends: 'Friends',
-  inner_circle: 'Inner Circle',
-};
-
 function FreshnessIndicator({ verifiedAt }: { verifiedAt: Date | null | undefined }) {
   if (!verifiedAt) return <span className={styles.freshnessNone} title="Address not verified" />;
   const ageMs = Date.now() - verifiedAt.getTime();
@@ -39,86 +32,43 @@ function FreshnessIndicator({ verifiedAt }: { verifiedAt: Date | null | undefine
   return <span className={styles.freshnessRed} title="Address likely outdated" />;
 }
 
-function TierBadge({ tier }: { tier: Tier }) {
-  return (
-    <span className={`${styles.tierBadge} ${styles[`tier_${tier}`]}`}>
-      {TIER_LABELS[tier]}
-    </span>
-  );
-}
-
-function FeaturedCard({ friend }: { friend: FriendCardData }) {
-  return (
-    <Link href={`/friends/${friend.id}`} className={`${styles.friendCard} ${styles.featured}`}>
-      <div
-        className={`${styles.avatar} ${styles.avatarFeatured}`}
-        style={friend.avatarUrl ? { backgroundImage: `url(${friend.avatarUrl})` } : undefined}
-      />
-      <div>
-        <div className={styles.cardMeta}>
-          {friend.tier && <TierBadge tier={friend.tier} />}
-          <FreshnessIndicator verifiedAt={friend.addressVerifiedAt} />
-        </div>
-        <h3 className={`${styles.friendName} ${styles.friendNameFeatured}`}>{friend.name}</h3>
-        <div className={`${styles.friendRelation} ${styles.friendRelationFeatured}`}>
-          {friend.relation}
-        </div>
-
-        {friend.details && (
-          <div className={styles.featuredDetails}>
-            {friend.details.map((detail, i) => (
-              <div key={i} className={styles.detailGroup}>
-                <span className={styles.detailLabel}>{detail.label}</span>
-                <span
-                  className={styles.detailValue}
-                  style={
-                    detail.accent
-                      ? { fontFamily: 'var(--font-accent)', fontSize: '1.3rem' }
-                      : undefined
-                  }
-                >
-                  {detail.value}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </Link>
-  );
-}
-
-function StandardCard({ friend }: { friend: FriendCardData }) {
-  return (
-    <Link href={`/friends/${friend.id}`} className={styles.friendCard}>
-      <div className={styles.cardHeader}>
-        <div
-          className={styles.avatar}
-          style={friend.avatarUrl ? { backgroundImage: `url(${friend.avatarUrl})` } : undefined}
-        />
-        <div className={styles.cardHeaderText}>
-          <h3 className={styles.friendName}>{friend.name}</h3>
-          <div className={styles.friendRelation}>{friend.relation}</div>
-        </div>
-        <FreshnessIndicator verifiedAt={friend.addressVerifiedAt} />
-      </div>
-      <div className={styles.cardFooter}>
-        {friend.tier && <TierBadge tier={friend.tier} />}
-        {friend.tags && friend.tags.length > 0 && (
-          <div className={styles.metaTags}>
-            {friend.tags.map((tag, i) => (
-              <Tag key={i} label={tag} />
-            ))}
-          </div>
-        )}
-      </div>
-    </Link>
-  );
-}
-
 export function FriendCard({ friend }: { friend: FriendCardData }) {
-  if (friend.featured) {
-    return <FeaturedCard friend={friend} />;
-  }
-  return <StandardCard friend={friend} />;
+  const freshness = (
+    <FreshnessIndicator verifiedAt={friend.addressVerifiedAt} />
+  );
+
+  const isFresh = friend.addressVerifiedAt
+    ? (Date.now() - friend.addressVerifiedAt.getTime()) / (1000 * 60 * 60 * 24) < 180
+    : false;
+
+  return (
+    <Link href={`/friends/${friend.id}`} className={styles.rosterRow}>
+      <div
+        className={styles.squareAvatar}
+        style={friend.avatarUrl ? { backgroundImage: `url(${friend.avatarUrl})` } : undefined}
+      >
+        {!friend.avatarUrl && (
+          <span className={styles.avatarInitial}>
+            {friend.name.charAt(0).toUpperCase()}
+          </span>
+        )}
+      </div>
+
+      <div className={styles.rowInfo}>
+        <div className={styles.rowName}>{friend.name}</div>
+        {friend.relation && (
+          <div className={styles.rowMeta}>
+            <span
+              className={`${styles.freshnessDot} ${isFresh ? styles.dotTeal : styles.dotGrey}`}
+            />
+            {friend.relation}
+          </div>
+        )}
+      </div>
+
+      <div className={styles.rowTrailing}>
+        {freshness}
+      </div>
+    </Link>
+  );
 }

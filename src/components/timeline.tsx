@@ -9,28 +9,16 @@ export interface TimelineEventData {
   muted?: boolean;
 }
 
-function TimelineEvent({ event }: { event: TimelineEventData }) {
+function TimelineItem({ event }: { event: TimelineEventData }) {
   return (
-    <div className={styles.timelineEvent}>
-      <div
-        className={styles.timelineDot}
-        style={event.muted ? { borderColor: 'var(--text-muted)', background: 'transparent' } : undefined}
-      />
-      <span className={styles.eventDate}>{event.date}</span>
-      <div className={styles.eventCard} style={event.muted ? { opacity: 0.7 } : undefined}>
-        <div
-          className={styles.eventType}
-          style={event.muted ? { color: 'var(--text-muted)' } : undefined}
-        >
-          {event.type}
-        </div>
-        <div className={styles.eventDesc}>{event.description}</div>
-        {event.actionLabel && (
-          <a href={event.action ?? '#'} className={styles.eventAction}>
-            {event.actionLabel}
-          </a>
-        )}
+    <div className={`${styles.timelineItem} ${event.muted ? styles.muted : ''}`}>
+      <div className={styles.stampAvatar}>
+        <span className={styles.stampInitial}>
+          {event.description.charAt(0).toUpperCase()}
+        </span>
       </div>
+      <div className={styles.itemName}>{event.description}</div>
+      <div className={styles.itemDate}>{event.date}</div>
     </div>
   );
 }
@@ -40,18 +28,16 @@ interface TimelineProps {
 }
 
 export function Timeline({ events }: TimelineProps) {
-  return (
-    <aside>
-      <div className={styles.timelineHeader}>
-        <h2 className={styles.sectionTitle}>Coming Up</h2>
-        <span className={styles.sectionAccent}>soon</span>
-      </div>
+  if (events.length === 0) return null;
 
-      <div className={styles.timeline}>
+  return (
+    <section className={styles.timelineSection}>
+      <div className={styles.sectionLabel}>UPCOMING BIRTHDAYS</div>
+      <div className={styles.timelineScroll}>
         {events.map((event, i) => (
-          <TimelineEvent key={i} event={event} />
+          <TimelineItem key={i} event={event} />
         ))}
       </div>
-    </aside>
+    </section>
   );
 }

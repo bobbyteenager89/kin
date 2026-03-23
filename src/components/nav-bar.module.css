@@ -10,13 +10,15 @@
     align-items: center;
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
-    height: 64px;
-    background: var(--bg-card);
-    box-shadow: 0 -2px 16px rgba(74, 46, 27, 0.1);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 400px;
+    height: 56px;
+    background: var(--bg-paper);
+    border-top: 1px solid rgba(44, 62, 80, 0.08);
     z-index: 100;
-    padding: 0 var(--space-md);
+    padding: 0 var(--spacing-md);
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 }
@@ -26,23 +28,23 @@
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  padding: var(--space-sm);
+  padding: var(--spacing-sm);
   text-decoration: none;
-  color: var(--text-muted);
+  color: var(--ink-light);
   transition: color 0.15s ease;
   cursor: pointer;
   background: transparent;
   border: none;
-  font-family: var(--font-ui);
+  font-family: var(--font-sans);
   flex: 1;
 }
 
 .navItem:hover {
-  color: var(--text-main);
+  color: var(--ink-dark);
 }
 
 .navItemActive {
-  color: var(--accent-baked);
+  color: var(--accent-olive);
 }
 
 .navIcon {
@@ -53,21 +55,21 @@
 }
 
 .navLabel {
-  font-size: 0.65rem;
-  font-weight: 700;
+  font-size: 9px;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.08em;
 }
 
 .badge {
   position: absolute;
   top: -5px;
   right: -8px;
-  background: var(--accent-baked);
-  color: var(--accent-cream);
-  font-size: 0.6rem;
-  font-weight: 700;
-  border-radius: var(--radius-pill);
+  background: var(--accent-rust);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 500;
+  border-radius: 999px;
   padding: 1px 5px;
   min-width: 16px;
   text-align: center;

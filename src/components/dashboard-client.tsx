@@ -36,9 +36,6 @@ export function DashboardClient({ persons, events, notifications = [] }: Dashboa
       )
     : persons;
 
-  const featured = filtered.find((p) => p.featured);
-  const rest = filtered.filter((p) => !p.featured);
-
   function handleSaved() {
     router.refresh();
   }
@@ -47,13 +44,12 @@ export function DashboardClient({ persons, events, notifications = [] }: Dashboa
     <>
       <TopNav onSearch={setSearch} onAddPerson={() => setDrawerOpen(true)} notifications={notifications} />
 
-      <main className={styles.dashboardGrid}>
+      <main className={styles.dashboardMain}>
         <Timeline events={events} />
 
-        <section>
+        <section className={styles.rosterSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Your Circle</h2>
-            <span className={styles.sectionAccent}>fresh &amp; updated</span>
+            <span className={styles.sectionLabel}>YOUR CIRCLE</span>
           </div>
 
           {persons.length === 0 ? (
@@ -68,9 +64,8 @@ export function DashboardClient({ persons, events, notifications = [] }: Dashboa
               </button>
             </div>
           ) : (
-            <div className={styles.rosterGrid}>
-              {featured && <FriendCard friend={featured} />}
-              {rest.map((p) => (
+            <div className={styles.rosterList}>
+              {filtered.map((p) => (
                 <FriendCard key={p.id} friend={p} />
               ))}
             </div>
