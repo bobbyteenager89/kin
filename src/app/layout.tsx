@@ -1,9 +1,10 @@
 import { ClerkProvider } from '@clerk/nextjs';
+import { APP_NAME, APP_TAGLINE, APP_DESCRIPTION } from '@/lib/config';
 import './globals.css';
 
 export const metadata = {
-  title: 'Kin — Personal CRM',
-  description: 'Remember the people you care about',
+  title: `${APP_NAME} — ${APP_TAGLINE}`,
+  description: APP_DESCRIPTION,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

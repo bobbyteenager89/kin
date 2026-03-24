@@ -4,6 +4,7 @@ import { UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import { SearchIcon } from './search-icon';
 import { NotificationBell } from './notification-bell';
+import { APP_NAME } from '@/lib/config';
 import styles from './top-nav.module.css';
 
 interface Notification {
@@ -23,7 +24,7 @@ interface TopNavProps {
 export function TopNav({ onSearch, onAddPerson, notifications = [] }: TopNavProps) {
   return (
     <header className={styles.topNav}>
-      <Link href="/" className={styles.brand}>Kin</Link>
+      <Link href="/" className={styles.brand}>{APP_NAME}</Link>
 
       <div className={styles.navRight}>
         {onAddPerson && (

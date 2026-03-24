@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import Link from 'next/link';
+import { APP_NAME } from '@/lib/config';
 import { completeAddressRequest } from '@/lib/actions/address-requests';
 import styles from './page.module.css';
 
@@ -74,7 +75,7 @@ export function AddressForm({ token, senderName, message }: AddressFormProps) {
             Want to know when {senderName}&rsquo;s birthday is?
           </p>
           <Link href="/sign-up" className={styles.ctaBtn}>
-            Create your free Kin
+            Create your free {APP_NAME}
           </Link>
         </div>
       </div>

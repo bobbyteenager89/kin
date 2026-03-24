@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { createAddressRequest } from '@/lib/actions/address-requests';
+import { APP_NAME } from '@/lib/config';
 import styles from './address-request-button.module.css';
 
 interface AddressRequestButtonProps {
@@ -171,7 +172,7 @@ export function AddressRequestButton({ personId, personName, label }: AddressReq
                 </div>
 
                 <p className={styles.linkNote}>
-                  When {personName} fills out the form, their address will automatically appear in Kin.
+                  When {personName} fills out the form, their address will automatically appear in {APP_NAME}.
                 </p>
               </div>
             )}

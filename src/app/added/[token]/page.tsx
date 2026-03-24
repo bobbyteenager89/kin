@@ -1,9 +1,10 @@
 import Link from 'next/link';
+import { APP_NAME } from '@/lib/config';
 import styles from './page.module.css';
 
 export const metadata = {
-  title: 'Someone added you to their circle — Kin',
-  description: 'See who added you to their Kin circle',
+  title: `Someone added you to their circle — ${APP_NAME}`,
+  description: `See who added you to their ${APP_NAME} circle`,
   openGraph: {
     title: '👀 Someone added you to their circle',
     description: 'Sign up to see who — it only takes a moment',
@@ -28,7 +29,7 @@ export default async function AddedPage({ params }: PageProps) {
         <span className={styles.eyeIcon} aria-hidden="true">👀</span>
 
         <h1 className={styles.heading}>
-          Someone added you to their Kin circle
+          Someone added you to their {APP_NAME} circle
         </h1>
 
         <p className={styles.subheading}>
@@ -50,7 +51,7 @@ export default async function AddedPage({ params }: PageProps) {
         </Link>
 
         <p className={styles.footnote}>
-          Kin is a personal address book for people who like sending things.
+          {APP_NAME} is a personal address book for people who like sending things.
           <br />
           No spam. No social feed. Just people you care about.
         </p>

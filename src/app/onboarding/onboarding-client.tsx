@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { APP_NAME } from '@/lib/config';
 import { updateUserProfile } from '@/lib/actions/settings';
 import { createPerson } from '@/lib/actions/persons';
 import { createAddressRequest } from '@/lib/actions/address-requests';
@@ -115,9 +116,9 @@ export function OnboardingClient({ userId, clerkName }: OnboardingClientProps) {
       {step === 1 && (
         <form onSubmit={handleStep1} className={styles.stepForm}>
           <div className={styles.emoji}>🎁</div>
-          <h1 className={styles.title}>Welcome to Kin, {firstName}!</h1>
+          <h1 className={styles.title}>Welcome to {APP_NAME}, {firstName}!</h1>
           <p className={styles.subtitle}>
-            Kin helps you remember the people who matter most — birthdays, addresses, wishlists.
+            {APP_NAME} helps you remember the people who matter most — birthdays, addresses, wishlists.
           </p>
           <p className={styles.subtitle}>First, what&apos;s your phone number?</p>
 
@@ -249,7 +250,7 @@ export function OnboardingClient({ userId, clerkName }: OnboardingClientProps) {
           <div className={styles.emoji}>✨</div>
           <h1 className={styles.title}>You&apos;re all set!</h1>
           <p className={styles.subtitle}>
-            Kin is ready. You can add more friends, set up your wishlist,
+            {APP_NAME} is ready. You can add more friends, set up your wishlist,
             and never miss a birthday again.
           </p>
 

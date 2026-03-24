@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getAddressRequestByToken } from '@/lib/actions/address-requests';
+import { APP_NAME, APP_NAME_LOWER } from '@/lib/config';
 import { AddressForm } from './address-form';
 import styles from './page.module.css';
 
@@ -9,11 +10,11 @@ export async function generateMetadata({ params }: { params: Promise<{ token: st
   const senderName = request?.senderName ?? 'Someone';
 
   return {
-    title: `${senderName} wants to send you something — Kin`,
+    title: `${senderName} wants to send you something — ${APP_NAME}`,
     description: 'Share your address securely. Takes 30 seconds.',
     openGraph: {
       title: `🎁 ${senderName} wants to send you something`,
-      description: 'Tap to share your address securely with Kin',
+      description: `Tap to share your address securely with ${APP_NAME}`,
       type: 'website',
       images: ['/og-address-request.png'],
     },
@@ -80,7 +81,7 @@ export default async function AddressRequestPage({ params }: PageProps) {
         <div className={styles.card}>
           {/* Decorative postmark stamp */}
           <div className={styles.stamp} aria-hidden="true">
-            <span className={styles.stampInner}>kin</span>
+            <span className={styles.stampInner}>{APP_NAME_LOWER}</span>
             <span className={styles.stampYear}>address</span>
           </div>
 
