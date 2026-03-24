@@ -157,3 +157,13 @@ export const events = pgTable('events', {
   source: eventSourceEnum('source').default('manual').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+// ── Push Tokens ────────────────────────────────────────────
+
+export const pushTokens = pgTable('push_tokens', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id),
+  token: text('token').notNull(),
+  platform: text('platform').notNull().default('ios'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
